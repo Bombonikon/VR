@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://3fgpd83mw0r2"]
+
+[ext_resource type="Script" uid="uid://c4v0mvuu7j458" path="res://world/menu/MenuRoom.gd" id="1_umeb3"]
+[ext_resource type="PackedScene" uid="uid://beauve6byqvdd" path="res://world/tiles/MidWall.tscn" id="2_7dqb7"]
+[ext_resource type="PackedScene" uid="uid://fcbpbj8c1pc0" path="res://world/tiles/BigFloor.tscn" id="3_5spvd"]
+[ext_resource type="PackedScene" uid="uid://ctktfd1exxioc" path="res://world/tiles/Button.tscn" id="4_5spvd"]
+
+[node name="MenuRoom" type="Node3D"]
+script = ExtResource("1_umeb3")
+
+[node name="RoomInstance" type="Node3D" parent="."]
+
+[node name="Walls" type="Node3D" parent="RoomInstance"]
+
+[node name="MidWall" parent="RoomInstance/Walls" instance=ExtResource("2_7dqb7")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 3, 0, 0)
+
+[node name="MidWall2" parent="RoomInstance/Walls" instance=ExtResource("2_7dqb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+
+[node name="MidWall3" parent="RoomInstance/Walls" instance=ExtResource("2_7dqb7")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3, 0, 0)
+
+[node name="MidWall4" parent="RoomInstance/Walls" instance=ExtResource("2_7dqb7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3)
+
+[node name="BigFloor" parent="RoomInstance" instance=ExtResource("3_5spvd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)
+
+[node name="BigRoof" parent="RoomInstance" instance=ExtResource("3_5spvd")]
+transform = Transform3D(-0.99999994, 0, 0, 0, -0.99999994, 0, 0, 0, 1, 0.07401723, 1.0105143, -0.009368181)
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+
+[node name="MenuUI" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04689336, 1.2203346, -2)
+
+[node name="StartButton" type="Button" parent="MenuUI"]
+offset_right = 8.0
+offset_bottom = 8.0
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton2" type="Node3D" parent="MenuUI"]
+
+[node name="Button" parent="MenuUI" instance=ExtResource("4_5spvd")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -1, 0)

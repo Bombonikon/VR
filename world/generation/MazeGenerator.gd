@@ -1,5 +1,5 @@
 extends Object
-class_name MazeGenerator   # <<< KLUCZOWE
+class_name MazeGenerator
 
 const WALL := 0
 const FLOOR := 1
@@ -10,8 +10,8 @@ const FLOOR := 1
 @export var extra_connection_chance := 0.4
 @export var subroom_chance := 0.45
 
-func generate(width: int, height: int):
-	var data := preload("res://world/generation/MazeData.gd").new(width, height)
+func generate(width: int, height: int) -> MazeData:
+	var data := MazeData.new(width, height)
 	randomize()
 
 	var rooms: Array[Rect2i] = []
@@ -58,16 +58,19 @@ func generate(width: int, height: int):
 	# -----------------------------
 	# START + END
 	# -----------------------------
-	var start_room := rooms[0]
-	var start_cell := Vector2i(
-		start_room.position.x + start_room.size.x / 2,
-		start_room.position.y + start_room.size.y / 2
-	)
-
-	data.set_cell(start_cell.x, start_cell.y, MazeData.START)
-
-	var end_cell := _place_end_point(data, start_cell)
-	print("END placed at:", end_cell)
+	if rooms.size() > 0:
+		var start_room := rooms[0]
+		var start_cell := Vector2i(
+			start_room.position.x + start_room.size.x / 2,
+			start_room.position.y + start_room.size.y / 2
+		)
+		data.set_cell(start_cell.x, start_cell.y, MazeData.START)
+		
+		# ZMIANA: Przekazujemy tablicę 'rooms', aby znaleźć najdalszy pokój
+		var end_cell := _place_end_point(data, start_cell, rooms)
+		print("GENERATOR: Start at ", start_cell, " | End at ", end_cell)
+	else:
+		push_error("GENERATOR ERROR: Could not place rooms!")
 
 	return data
 
@@ -97,17 +100,53 @@ func _carve_v(data: MazeData, y1: int, y2: int, x: int) -> void:
 	for y in range(min(y1, y2), max(y1, y2) + 1):
 		data.set_cell(x, y, FLOOR)
 
-func _place_end_point(data: MazeData, start: Vector2i) -> Vector2i:
+# ZMIANA: Nowa logika z użyciem Flood Fill (BFS) do szukania najdłuższej ścieżki
+func _place_end_point(data: MazeData, start: Vector2i, rooms: Array[Rect2i]) -> Vector2i:
+	# Mapa odległości: Vector2i -> int (liczba kroków)
+	var distances := {} 
+	var queue: Array[Vector2i] = [start]
+	distances[start] = 0
+	
+	var directions = [Vector2i(0, 1), Vector2i(0, -1), Vector2i(1, 0), Vector2i(-1, 0)]
+	
+	# Algorytm BFS - rozlewamy się po korytarzach
+	while not queue.is_empty():
+		var current = queue.pop_front()
+		var current_dist = distances[current]
+		
+		for dir in directions:
+			var next = current + dir
+			
+			# Sprawdzenie granic mapy
+			if next.x < 0 or next.y < 0 or next.x >= data.width or next.y >= data.height:
+				continue
+
+			# Jeśli to nie ściana i jeszcze tam nie byliśmy
+			if data.get_cell(next.x, next.y) != WALL: 
+				if not distances.has(next):
+					distances[next] = current_dist + 1
+					queue.append(next)
+
+	# Wybieramy ten pokój z listy, do którego jest najdalej (najwięcej kroków)
 	var best_cell := start
-	var best_distance := -1
+	var max_distance := -1
 
-	for y in range(data.height):
-		for x in range(data.width):
-			if data.get_cell(x, y) == FLOOR:
-				var dist: int = abs(x - start.x) + abs(y - start.y)
-				if dist > best_distance:
-					best_distance = dist
-					best_cell = Vector2i(x, y)
+	for room in rooms:
+		var center = Vector2i(
+			room.position.x + room.size.x / 2,
+			room.position.y + room.size.y / 2
+		)
+		
+		# Sprawdzamy, czy algorytm dotarł do środka tego pokoju
+		if distances.has(center):
+			var dist = distances[center]
+			if dist > max_distance:
+				max_distance = dist
+				best_cell = center
 
+	# Zabezpieczenie na wypadek błędu
+	if max_distance == -1:
+		push_warning("Nie znaleziono ścieżki do żadnego pokoju! Ustawiam End w punkcie startu.")
+		
 	data.set_cell(best_cell.x, best_cell.y, MazeData.END)
 	return best_cell

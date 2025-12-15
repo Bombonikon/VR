@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://cikccfixp61lx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3itim"]
+albedo_color = Color(0.47484607, 0.4703893, 2.8878452e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_fgt4k"]
+material = SubResource("StandardMaterial3D_3itim")
+size = Vector3(10, 3, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4udjv"]
+margin = 0.0
+size = Vector3(10, 3, 0.3)
+
+[node name="LongWall" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005297661, 0.014267445, -0.0077762604)
+mesh = SubResource("BoxMesh_fgt4k")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.025390625, -0.010768674, 0)
+shape = SubResource("BoxShape3D_4udjv")

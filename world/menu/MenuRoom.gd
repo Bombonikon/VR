@@ -1,30 +1,29 @@
 extends Node3D
 
+# Definiujemy sygnał, który GameManager usłyszy
+signal start_game_requested
+
 @onready var start_button := $MenuUI/StartButton
 
 func _ready():
 	if start_button != null:
 		start_button.pressed.connect(_on_start_pressed)
-		print("MenuRoom READY – StartButton connected")
+		print("MenuRoom: Button connected")
 	else:
-		push_error("StartButton NOT FOUND")
+		push_error("MenuRoom: StartButton NOT FOUND in MenuUI")
 
-	print("Press ENTER to start game (DEBUG)")
+	print("MenuRoom: Press ENTER to start game (DEBUG)")
 
 func _unhandled_input(event):
 	if event is InputEventKey:
 		if event.pressed and event.keycode == KEY_ENTER:
-			print("ENTER pressed (DEBUG)")
-			_start_game()
+			print("MenuRoom: ENTER pressed")
+			_request_start()
 
 func _on_start_pressed():
-	print("Start button PRESSED")
-	_start_game()
+	print("MenuRoom: Button pressed")
+	_request_start()
 
-func _start_game():
-	var game_manager := get_tree().get_root().get_node_or_null("Main/GameManager")
-	if game_manager == null:
-		push_error("GameManager NOT FOUND")
-		return
-
-	game_manager.start_game()
+func _request_start():
+	# Emitujemy sygnał w górę do GameManagera
+	start_game_requested.emit()

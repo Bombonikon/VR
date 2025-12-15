@@ -1,10 +1,9 @@
 extends Object
 
 # ===============================
-# PRELOADY / KONSTANTY
+# PRELOADY (Tylko sceny, nie skrypty z class_name!)
 # ===============================
 
-const MazeData = preload("res://world/generation/MazeData.gd")
 const FloorScene = preload("res://world/tiles/Floor.tscn")
 const WallScene = preload("res://world/tiles/Wall.tscn")
 const EndRoomScene = preload("res://world/rooms/EndRoom.tscn")
@@ -17,6 +16,7 @@ const WALL_OFFSET := WALL_THICKNESS / 2.0
 # ===============================
 
 func build(data: MazeData, parent: Node3D, cell_size: float) -> void:
+	print("BUILDER: Starting build process...")
 	for y in range(data.height):
 		for x in range(data.width):
 			var cell := data.get_cell(x, y)
@@ -26,23 +26,25 @@ func build(data: MazeData, parent: Node3D, cell_size: float) -> void:
 				_spawn_end_room(parent, x, y, cell_size)
 				continue
 
-			# --- NORMALNE TILE ---
+			# --- NORMALNE TILE (FLOOR ORAZ START) ---
 			if cell == MazeData.FLOOR or cell == MazeData.START:
 				_spawn_floor(parent, x, y, cell_size)
 				_spawn_walls_around(parent, data, x, y, cell_size)
+	
+	print("BUILDER: Build complete.")
 
 # ===============================
 # FLOOR
 # ===============================
 
 func _spawn_floor(parent: Node3D, x: int, y: int, size: float) -> void:
-	var floor := FloorScene.instantiate()
-	floor.position = Vector3(
+	var floor_inst := FloorScene.instantiate()
+	floor_inst.position = Vector3(
 		x * size,
 		0,
 		y * size
 	)
-	parent.add_child(floor)
+	parent.add_child(floor_inst)
 
 # ===============================
 # WALLS
@@ -100,4 +102,6 @@ func _spawn_end_room(parent: Node3D, x: int, y: int, size: float) -> void:
 func _is_wall(data: MazeData, x: int, y: int) -> bool:
 	if x < 0 or y < 0 or x >= data.width or y >= data.height:
 		return true
-	return data.get_cell(x, y) == MazeData.WALL
+	# Traktujemy wszystko co nie jest podłogą, startem lub końcem jako ścianę
+	var cell = data.get_cell(x, y)
+	return cell == MazeData.WALL

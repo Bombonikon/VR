@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://btkbt2hjg0a5i"]
+
+[ext_resource type="Script" uid="uid://cwhqhfipvm0vn" path="res://core/LevelManager.gd" id="1_8cqg5"]
+[ext_resource type="PackedScene" uid="uid://crfcj2dbp2s4j" path="res://world/rooms/StartRoom.tscn" id="2_vk2hh"]
+
+[node name="DungeonScene" type="Node3D"]
+
+[node name="LevelManager" type="Node" parent="."]
+script = ExtResource("1_8cqg5")
+start_room_scene = ExtResource("2_vk2hh")
+
+[node name="DungeonRoot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="DebugSpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(0.98370993, 0, -0.1797638, 0, 1, 0, 0.1797638, 0, 0.98370993, 0, 1.3455398, 0)

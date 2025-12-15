@@ -1,0 +1,72 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0a37c1846qgj"]
+
+[ext_resource type="Script" uid="uid://c3mk3wbij52gq" path="res://core/GameManager.gd" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://cwhqhfipvm0vn" path="res://core/LevelManager.gd" id="2_h2yge"]
+
+[sub_resource type="GDScript" id="GDScript_0xm2m"]
+script/source = "extends Node3D
+
+@export var move_speed := 10.0
+@export var mouse_sensitivity := 0.2
+
+var yaw := 0.0
+var pitch := 0.0
+
+func _ready():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		yaw -= event.relative.x * mouse_sensitivity
+		pitch -= event.relative.y * mouse_sensitivity
+		pitch = clamp(pitch, -89, 89)
+		rotation_degrees = Vector3(pitch, yaw, 0)
+
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+func _process(delta):
+	var dir := Vector3.ZERO
+
+	if Input.is_action_pressed(\"move_forward\"):
+		dir -= transform.basis.z
+	if Input.is_action_pressed(\"move_backward\"):
+		dir += transform.basis.z
+	if Input.is_action_pressed(\"move_left\"):
+		dir -= transform.basis.x
+	if Input.is_action_pressed(\"move_right\"):
+		dir += transform.basis.x
+	if Input.is_action_pressed(\"move_up\"):
+		dir += transform.basis.y
+	if Input.is_action_pressed(\"move_down\"):
+		dir -= transform.basis.y
+
+	if dir != Vector3.ZERO:
+		position += dir.normalized() * move_speed * delta
+"
+
+[node name="Main" type="Node3D"]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_0xm2m")
+
+[node name="WorldRoot" type="Node3D" parent="."]
+
+[node name="LevelManager" type="Node" parent="WorldRoot"]
+script = ExtResource("2_h2yge")
+
+[node name="PlayerXR" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="PlayerXR"]
+transform = Transform3D(0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, -0.49999997, 0.49999997, 12, 12, 12)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
+light_energy = 3.0
+
+[node name="DebugCamera" type="Node3D" parent="."]
+script = SubResource("GDScript_0xm2m")
+
+[node name="Camera3D" type="Camera3D" parent="DebugCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 12, 12)
+current = true

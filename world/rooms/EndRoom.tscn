@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgcbec67iqm6a"]
+[gd_scene load_steps=4 format=3 uid="uid://bgcbec67iqm6a"]
 
 [ext_resource type="PackedScene" uid="uid://dul78rtvb5x2y" path="res://world/tiles/Wall.tscn" id="1_swbp1"]
 [ext_resource type="PackedScene" uid="uid://yda6bmotm50q" path="res://world/tiles/Floor.tscn" id="2_lkemx"]
+[ext_resource type="PackedScene" uid="uid://ctktfd1exxioc" path="res://world/tiles/Button.tscn" id="3_lkemx"]
 
 [node name="EndRoom" type="Node3D"]
 
@@ -10,21 +11,24 @@
 [node name="Walls" type="Node3D" parent="RoomInstance"]
 
 [node name="Wall1" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.6)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -1.5)
 
 [node name="Wall2" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1.6205721)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 1.5)
 
 [node name="Wall3" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.5595126, 1, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.5, 1.3, 0)
 
 [node name="Wall4" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(-4.371139e-08, -0.037376247, -0.99930125, 0, 0.99930125, -0.037376247, 1, -1.6337677e-09, -4.3680846e-08, -1.473672, 1, 0)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.5, 1.3, 0)
 
 [node name="Floor" parent="RoomInstance" instance=ExtResource("2_lkemx")]
 
 [node name="Floor2" parent="RoomInstance" instance=ExtResource("2_lkemx")]
 transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 2.4802537, 0)
+
+[node name="Button" parent="RoomInstance" instance=ExtResource("3_lkemx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3755348, 0)
 
 [node name="ExitPoint" type="Marker3D" parent="."]
 

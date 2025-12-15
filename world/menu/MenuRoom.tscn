@@ -44,3 +44,5 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Button" parent="MenuUI" instance=ExtResource("4_5spvd")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, -1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]

@@ -1,41 +1,96 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgcbec67iqm6a"]
+[gd_scene load_steps=7 format=3 uid="uid://byjyfwrwxcwog"]
 
-[ext_resource type="PackedScene" uid="uid://dul78rtvb5x2y" path="res://world/tiles/Wall.tscn" id="1_swbp1"]
+[ext_resource type="Script" uid="uid://b1qm6q8lr10vx" path="res://world/rooms/EndRoom.gd" id="1_swbp1"]
 [ext_resource type="PackedScene" uid="uid://yda6bmotm50q" path="res://world/tiles/Floor.tscn" id="2_lkemx"]
-[ext_resource type="PackedScene" uid="uid://ctktfd1exxioc" path="res://world/tiles/Button.tscn" id="3_lkemx"]
 
-[node name="EndRoom" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_base"]
+albedo_color = Color(0.3, 0.3, 0.3, 1)
+metallic = 0.2
+roughness = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frame"]
+albedo_color = Color(0.1, 0.1, 0.1, 1)
+metallic = 0.5
+roughness = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_energy"]
+transparency = 1
+albedo_color = Color(1, 0, 0, 0.6)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_trigger"]
+size = Vector3(2, 2, 0.5)
+
+[node name="EndRoom" type="Node3D" node_paths=PackedStringArray("energy_fields", "lights")]
+script = ExtResource("1_swbp1")
+energy_fields = [NodePath("RoomInstance/PortalConstruction/EnergyField"), NodePath("RoomInstance/PortalConstruction/EnergyField2")]
+lights = [NodePath("RoomInstance/PortalConstruction/PortalLight")]
 
 [node name="RoomInstance" type="Node3D" parent="."]
 
-[node name="Walls" type="Node3D" parent="RoomInstance"]
-
-[node name="Wall1" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, -1.5)
-
-[node name="Wall2" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3, 1.5)
-
-[node name="Wall3" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 1.5, 1.3, 0)
-
-[node name="Wall4" parent="RoomInstance/Walls" instance=ExtResource("1_swbp1")]
-transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.5, 1.3, 0)
-
 [node name="Floor" parent="RoomInstance" instance=ExtResource("2_lkemx")]
 
-[node name="Floor2" parent="RoomInstance" instance=ExtResource("2_lkemx")]
-transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 2.4802537, 0)
+[node name="PortalConstruction" type="Node3D" parent="RoomInstance"]
 
-[node name="Button" parent="RoomInstance" instance=ExtResource("3_lkemx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3755348, 0)
+[node name="Base" type="CSGCylinder3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+radius = 1.0
+height = 0.5
+sides = 6
+material = SubResource("StandardMaterial3D_base")
 
-[node name="ExitPoint" type="Marker3D" parent="."]
+[node name="HexFrame" type="CSGTorus3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0)
+inner_radius = 0.918
+outer_radius = 1.144
+sides = 6
+material = SubResource("StandardMaterial3D_frame")
 
-[node name="EndProp" type="Node3D" parent="."]
+[node name="HexFrame2" type="CSGTorus3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(-5.9604645e-08, -1, 4.3711395e-08, 0, -4.37114e-08, -1, 1, -5.9604645e-08, 1.7763568e-15, 0, 2, 0)
+inner_radius = 0.918
+outer_radius = 1.144
+sides = 6
+material = SubResource("StandardMaterial3D_frame")
+
+[node name="HexFrame3" type="CSGTorus3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(0.70710677, -0.70710677, 3.0908634e-08, 0, -4.371141e-08, -1, 0.70710677, 0.70710677, -3.0908634e-08, 0, 1.9999999, 0)
+inner_radius = 0.918
+outer_radius = 1.144
+sides = 6
+material = SubResource("StandardMaterial3D_frame")
+
+[node name="HexFrame4" type="CSGTorus3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(-0.7071068, -0.7071067, 3.0908623e-08, 0, -4.37114e-08, -1, 0.7071067, -0.7071068, 3.0908623e-08, 0, 2, 0)
+inner_radius = 0.918
+outer_radius = 1.144
+sides = 6
+material = SubResource("StandardMaterial3D_frame")
+
+[node name="EnergyField" type="CSGCylinder3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, 0)
+radius = 1.1
+height = 0.1
+sides = 6
+material = SubResource("StandardMaterial3D_energy")
+
+[node name="EnergyField2" type="CSGCylinder3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(-4.371139e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.371139e-08, 1.9106859e-15, 0, 2, 0)
+radius = 1.1
+height = 0.1
+sides = 6
+material = SubResource("StandardMaterial3D_energy")
+
+[node name="PortalLight" type="OmniLight3D" parent="RoomInstance/PortalConstruction"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+light_color = Color(1, 0, 0, 1)
+light_energy = 3.0
+omni_range = 4.0
 
 [node name="EndTrigger" type="Area3D" parent="."]
-
-[node name="Area3D" type="Area3D" parent="EndTrigger"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EndTrigger"]
+shape = SubResource("BoxShape3D_trigger")

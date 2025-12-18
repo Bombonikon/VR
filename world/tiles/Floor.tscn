@@ -10,7 +10,7 @@ size = Vector2(3, 3)
 [sub_resource type="BoxShape3D" id="BoxShape3D_ancsx"]
 size = Vector3(3, 0.2, 3)
 
-[node name="Floor" type="Node3D"]
+[node name="Floor" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_g6t10")

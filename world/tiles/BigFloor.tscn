@@ -10,7 +10,7 @@ size = Vector2(6, 6)
 [sub_resource type="BoxShape3D" id="BoxShape3D_xbqq0"]
 size = Vector3(58, 0.58447266, 58)
 
-[node name="BigFloor" type="Node3D"]
+[node name="BigFloor" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00030755997, 0.00820446, -0.01190567)

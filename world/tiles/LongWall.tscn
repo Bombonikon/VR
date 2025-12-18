@@ -11,7 +11,7 @@ size = Vector3(10, 3, 0.3)
 margin = 0.0
 size = Vector3(10, 3, 0.3)
 
-[node name="LongWall" type="Node3D"]
+[node name="LongWall" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0005297661, 0.014267445, -0.0077762604)

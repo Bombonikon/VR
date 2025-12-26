@@ -1,12 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://btkbt2hjg0a5i"]
+[gd_scene load_steps=10 format=3 uid="uid://btkbt2hjg0a5i"]
 
 [ext_resource type="Script" uid="uid://d4et3uxrncy51" path="res://world/generation/DungeonGenerator.gd" id="1_cu5je"]
 [ext_resource type="PackedScene" uid="uid://yda6bmotm50q" path="res://world/tiles/Floor.tscn" id="2_gsioc"]
 [ext_resource type="PackedScene" uid="uid://dul78rtvb5x2y" path="res://world/tiles/Wall.tscn" id="3_jtxi3"]
-[ext_resource type="PackedScene" uid="uid://bw57qsc0lfkb" path="res://world/tiles/Ceilling.tscn" id="3_w2etb"]
+[ext_resource type="PackedScene" uid="uid://bw57qsc0lfkb" path="res://world/tiles/Ceilling.tscn" id="4_1y00g"]
 [ext_resource type="PackedScene" uid="uid://byjyfwrwxcwog" path="res://world/rooms/EndRoom.tscn" id="4_w2etb"]
 [ext_resource type="PackedScene" uid="uid://c5p8elhy4mqk0" path="res://world/interactables/Portal.tscn" id="5_gsioc"]
 [ext_resource type="PackedScene" uid="uid://dupifj0mun4se" path="res://world/tiles/Pillar.tscn" id="6_jtxi3"]
+[ext_resource type="PackedScene" uid="uid://dn1ubtb5ep2lf" path="res://world/interactables/coin.tscn" id="8_h4o21"]
+[ext_resource type="PackedScene" uid="uid://ctptgoxdnbsri" path="res://world/rooms/key.tscn" id="9_yswum"]
 
 [node name="DungeonScene" type="Node3D"]
 
@@ -14,13 +16,15 @@
 script = ExtResource("1_cu5je")
 floor_scene = ExtResource("2_gsioc")
 wall_scene = ExtResource("3_jtxi3")
-ceiling_scene = ExtResource("3_w2etb")
+ceiling_scene = ExtResource("4_1y00g")
 end_room_scene = ExtResource("4_w2etb")
 portal_scene = ExtResource("5_gsioc")
 pillar_scene = ExtResource("6_jtxi3")
+coin_scene = ExtResource("8_h4o21")
+key_scene = ExtResource("9_yswum")
 
 [node name="DungeonRoot" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="DebugSpawnPoint" type="Marker3D" parent="."]
-transform = Transform3D(0.98370993, 0, -0.1797638, 0, 1, 0, 0.1797638, 0, 0.98370993, 0, 1.3455398, 0)
+transform = Transform3D(0.98370993, 0, -0.1797638, 0, 1, 0, 0.1797638, 0, 0.98370993, 0, 1.5, 0)

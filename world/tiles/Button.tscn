@@ -10,11 +10,11 @@ size = Vector3(0.5, 0.5, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6x1ib"]
 size = Vector3(0.5, 0.5, 1)
 
-[node name="Button" type="Node3D"]
+[node name="Button" type="StaticBody3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_a5we3")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.3476305e-05, 0, 0)
 shape = SubResource("BoxShape3D_6x1ib")

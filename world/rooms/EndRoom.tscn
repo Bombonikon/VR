@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://byjyfwrwxcwog"]
+[gd_scene load_steps=8 format=3 uid="uid://byjyfwrwxcwog"]
 
 [ext_resource type="Script" uid="uid://b1qm6q8lr10vx" path="res://world/rooms/EndRoom.gd" id="1_swbp1"]
 [ext_resource type="PackedScene" uid="uid://yda6bmotm50q" path="res://world/tiles/Floor.tscn" id="2_lkemx"]
@@ -23,10 +23,11 @@ emission_energy_multiplier = 2.0
 [sub_resource type="BoxShape3D" id="BoxShape3D_trigger"]
 size = Vector3(2, 2, 0.5)
 
-[node name="EndRoom" type="Node3D" node_paths=PackedStringArray("energy_fields", "lights")]
+[sub_resource type="BoxShape3D" id="BoxShape3D_swbp1"]
+size = Vector3(3.0480347, 2.9575195, 2.9124146)
+
+[node name="EndRoom" type="Node3D"]
 script = ExtResource("1_swbp1")
-energy_fields = [NodePath("RoomInstance/PortalConstruction/EnergyField"), NodePath("RoomInstance/PortalConstruction/EnergyField2")]
-lights = [NodePath("RoomInstance/PortalConstruction/PortalLight")]
 
 [node name="RoomInstance" type="Node3D" parent="."]
 
@@ -94,3 +95,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EndTrigger"]
 shape = SubResource("BoxShape3D_trigger")
+
+[node name="KeyDetector" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="KeyDetector"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013946533, 0.47827148, -0.10159302)
+shape = SubResource("BoxShape3D_swbp1")

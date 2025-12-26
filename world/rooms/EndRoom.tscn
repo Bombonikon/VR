@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://byjyfwrwxcwog"]
+[gd_scene load_steps=9 format=3 uid="uid://byjyfwrwxcwog"]
 
 [ext_resource type="Script" uid="uid://b1qm6q8lr10vx" path="res://world/rooms/EndRoom.gd" id="1_swbp1"]
 [ext_resource type="PackedScene" uid="uid://yda6bmotm50q" path="res://world/tiles/Floor.tscn" id="2_lkemx"]
@@ -20,11 +20,14 @@ emission_enabled = true
 emission = Color(1, 0, 0, 1)
 emission_energy_multiplier = 2.0
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_swbp1"]
+radius = 1.2652179
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_trigger"]
-size = Vector3(2, 2, 0.5)
+size = Vector3(2, 2, 1.940918)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_swbp1"]
-size = Vector3(3.0480347, 2.9575195, 2.9124146)
+size = Vector3(3.0480347, 2.9575195, 3)
 
 [node name="EndRoom" type="Node3D"]
 script = ExtResource("1_swbp1")
@@ -90,15 +93,20 @@ light_color = Color(1, 0, 0, 1)
 light_energy = 3.0
 omni_range = 4.0
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RoomInstance"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1029792, 0)
+shape = SubResource("SphereShape3D_swbp1")
+
 [node name="EndTrigger" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EndTrigger"]
+transform = Transform3D(0.9999961, -0.002792523, 0, 0.002792523, 0.9999961, 0, 0, 0, 1, 0, 0, -0.042356014)
 shape = SubResource("BoxShape3D_trigger")
 
 [node name="KeyDetector" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="KeyDetector"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013946533, 0.47827148, -0.10159302)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.013946533, 0.47827148, -0.014865875)
 shape = SubResource("BoxShape3D_swbp1")

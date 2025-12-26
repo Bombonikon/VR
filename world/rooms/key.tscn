@@ -15,7 +15,9 @@ collision_layer = 5
 script = ExtResource("1_03r60")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("BoxShape3D_03r60")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." groups=["Key"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0025425, 0)
 mesh = SubResource("BoxMesh_vq5uh")

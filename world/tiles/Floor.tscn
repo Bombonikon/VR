@@ -8,7 +8,7 @@ material = SubResource("StandardMaterial3D_g6t10")
 size = Vector2(3, 3)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ancsx"]
-size = Vector3(3, 0.2, 3)
+size = Vector3(31, 0.2, 31)
 
 [node name="Floor" type="StaticBody3D"]
 
@@ -16,5 +16,5 @@ size = Vector3(3, 0.2, 3)
 mesh = SubResource("PlaneMesh_g6t10")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0.1, 0)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.4901161e-08, 0.1, 0)
 shape = SubResource("BoxShape3D_ancsx")

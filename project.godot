@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Vr Maze Project V 13"
+config/name="Vr Maze Project V 14"
 run/main_scene="uid://b0a37c1846qgj"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
@@ -21,6 +21,8 @@ GameManager="*res://core/GameManager.gd"
 ScoreManager="*res://core/ScoreManager.gd"
 XRToolsUserSettings="*res://addons/godot-xr-tools/user_settings/user_settings.gd"
 XRToolsRumbleManager="*res://addons/godot-xr-tools/rumble/rumble_manager.gd"
+Global="*res://core/Global.gd"
+StartXr="*res://addons/godot-xr-tools/xr/start_xr.gd"
 
 [editor_plugins]
 

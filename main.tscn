@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0a37c1846qgj"]
+[gd_scene load_steps=6 format=3 uid="uid://b0a37c1846qgj"]
 
 [ext_resource type="Script" uid="uid://c3mk3wbij52gq" path="res://core/GameManager.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://btkbt2hjg0a5i" path="res://world/DungeonScene.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://3fgpd83mw0r2" path="res://world/menu/MenuRoom.tscn" id="2_lquwl"]
 [ext_resource type="PackedScene" uid="uid://b4fryq5mvjwgv" path="res://player/PlayerDebug.tscn" id="4_7mycd"]
+[ext_resource type="PackedScene" uid="uid://birxk12ypx0l3" path="res://player/PlayerXR.tscn" id="5_lquwl"]
 
 [node name="Main" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -13,14 +14,13 @@ script = ExtResource("1_0xm2m")
 menu_scene = ExtResource("2_lquwl")
 dungeon_scene = ExtResource("2_1bvp3")
 player_debug_scene = ExtResource("4_7mycd")
+player_vr_scene = ExtResource("5_lquwl")
 
 [node name="SceneRoot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-
-[node name="PlayerXR" type="Node3D" parent="."]
-process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, -1, 0)
 light_energy = 2.0
+
+[node name="PlayerXR" parent="." instance=ExtResource("5_lquwl")]

@@ -1,3 +1,56 @@
-[gd_scene format=3 uid="uid://birxk12ypx0l3"]
+[gd_scene load_steps=10 format=3 uid="uid://birxk12ypx0l3"]
 
-[node name="PlayerXr" type="Node3D"]
+[ext_resource type="PackedScene" uid="uid://bdwmserhqai5h" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/left_physics_hand_low.tscn" id="1_vh74o"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="5_blhrw"]
+[ext_resource type="PackedScene" uid="uid://btf05hjpw6k05" path="res://addons/godot-xr-tools/hands/scenes/lowpoly/right_physics_hand_low.tscn" id="7_lxklr"]
+[ext_resource type="PackedScene" uid="uid://bl2nuu3qhlb5k" path="res://addons/godot-xr-tools/functions/movement_direct.tscn" id="10_7unxs"]
+[ext_resource type="PackedScene" uid="uid://b6bk2pj8vbj28" path="res://addons/godot-xr-tools/functions/movement_turn.tscn" id="12_yvpug"]
+[ext_resource type="PackedScene" uid="uid://diyu06cw06syv" path="res://addons/godot-xr-tools/player/player_body.tscn" id="14_qdhpa"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vkyq4"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_h4kld"]
+radius = 0.05974105
+
+[sub_resource type="SphereMesh" id="SphereMesh_no7g5"]
+
+[node name="PlayerXR" type="XROrigin3D"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+current = true
+
+[node name="Ball" type="StaticBody3D" parent="XRCamera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.6665773)
+physics_material_override = SubResource("PhysicsMaterial_vkyq4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XRCamera3D/Ball"]
+shape = SubResource("SphereShape3D_h4kld")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XRCamera3D/Ball"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_no7g5")
+
+[node name="LeftHand" type="XRController3D" parent="."]
+tracker = &"left_hand"
+pose = &"aim"
+
+[node name="LeftPhysicsHand" parent="LeftHand" instance=ExtResource("1_vh74o")]
+
+[node name="FunctionPickup" parent="LeftHand" instance=ExtResource("5_blhrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.02, -0.05, 0.1)
+
+[node name="RightHand" type="XRController3D" parent="."]
+tracker = &"right_hand"
+pose = &"aim"
+
+[node name="RightPhysicsHand" parent="RightHand" instance=ExtResource("7_lxklr")]
+
+[node name="FunctionPickup" parent="RightHand" instance=ExtResource("5_blhrw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.02, -0.05, 0.1)
+
+[node name="MovementDirect" parent="." instance=ExtResource("10_7unxs")]
+strafe = true
+
+[node name="MovementTurn" parent="." instance=ExtResource("12_yvpug")]
+
+[node name="PlayerBody" parent="." instance=ExtResource("14_qdhpa")]
